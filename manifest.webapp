@@ -1,6 +1,6 @@
 {
   "version": "0.2.0",
-  "name": "Test",
+  "name": "Gesture App",
   "description": "Authentication based on gestures",
   "launch_path": "/index.html",
   "icons": {

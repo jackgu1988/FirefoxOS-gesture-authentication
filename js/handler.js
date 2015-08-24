@@ -237,6 +237,8 @@ function save() {
 		}
 
 		$('#text').text("Saved a gesture of " + newGesture.length + " frames.");
+		
+		load();
 	} else {
 		$('#text').text("Please record a gesture first.");
 	}
