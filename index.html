@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Privileged app</title>
+        <meta name="description" content="A privileged app stub">
+
+        <!--
+          viewport allows you to control how mobile browsers will render your content.
+          width=device-width tells mobile browsers to render your content across the
+          full width of the screen, without being zoomed out (by default it would render
+          it at a desktop width, then shrink it to fit.)
+          Read more about it here:
+          https://developer.mozilla.org/Mozilla/Mobile/Viewport_meta_tag
+        -->
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css">
+        <link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css">
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+<!--         <link rel="stylesheet" href="css/app.css"> -->
+
+        <!--
+        The following two lines are for loading the localisations library
+        and the localisation data-so people can use the app in their
+        own language (as long as you provide translations).
+        -->
+<!--         <link rel="prefetch" type="application/l10n" href="data/locales.ini" /> -->
+<!--         <script type="text/javascript" src="js/libs/l10n.js"></script> -->
+        
+        <script type="text/javascript" src="js/libs/jquery.js"></script>
+        <script type="text/javascript" src="js/libs/jquery.mobile-1.4.5.min.js"></script>
+        
+        <script type="text/javascript" src="js/handler.js"></script>
+    </head>
+    <body>
+        <div class="ui-grid-a center">
+        <div class="ui-block-a"><button id="save" class="ui-btn ui-corner-all" onclick="save()">
+            Save
+        </button></div>
+        <div class="ui-block-b"><button id="compare" class="ui-btn ui-corner-all" onclick="compare()">
+            Compare
+        </button></div>
+        </div>
+        <div style="height:150px;">
+            
+        </div>
+        <div>
+            <span id="text">No gestures recorded yet!</span>
+        </div>
+        <div style="height:15px;">
+            
+        </div>
+        <div data-role="controlgroup">
+            <button id="record">
+                Record
+            </button>
+        </div>
+    </body>
+</html>
