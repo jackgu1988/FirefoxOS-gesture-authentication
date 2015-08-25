@@ -20,6 +20,8 @@ var gestureChar = [];
 var allGestures = [];
 var gestName = [];
 
+var fail;
+
 function initializeDB() {
 	if (window.indexedDB) {
 		console.log("IndexedDB support is there");
@@ -90,6 +92,8 @@ function renew() {
 }
 
 $(document).ready(function() {
+	
+	jQuery.mobile.orientationChangeEnabled = false;
 
 	initializeDB(0);
 	
@@ -218,17 +222,26 @@ function compare() {
  				id = i;
 			}
  		}
+		
+		fail = false;
 
 		if (minCost > 50) {
-			$(".ui-page").css("background", "red");
+			$("#welcome").text("Authentication failed!");
+			setInterval(function () {if (fail) $("#welcome").text("");}, 3000);
+			fail = true;
 		} else {
-			$(".ui-page").css("background", "green");
 			$("#welcome").text("Welcome " + gestName[id]);
 		}
-		$("#text").text("Score: " + minCost + " / id = " + id);
+		$("#text").text("Score: " + minCost);
+		newGesture = [];
+		setInterval(function () {$("#text").text("Found " + allGestures.length + " recorded gestures.");}, 3000);
 	} else {
 		$("#text").text("A gesture is missing!!!");
 	}
+}
+
+function logout() {
+	$("#welcome").text("");
 }
 
 function save() {
@@ -374,7 +387,6 @@ function deleteDial() {
       'OK': {
         click: function () { 
           renew();
-			$(".ui-page").css("background", "white");
 					$("#welcome").text("");
         }
       },

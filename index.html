@@ -2,8 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Privileged app</title>
-        <meta name="description" content="A privileged app stub">
+        <title>Gesture App</title>
 
         <!--
           viewport allows you to control how mobile browsers will render your content.
@@ -13,28 +12,34 @@
           Read more about it here:
           https://developer.mozilla.org/Mozilla/Mobile/Viewport_meta_tag
         -->
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css">
-        <link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css">
-        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.simpledialog.min.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
         
-        <script type="text/javascript" src="js/libs/jquery.js"></script>
-        <script type="text/javascript" src="js/libs/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/libs/jquery-1.11.1.min.js"></script>
+        <script src="js/libs/jquery.mobile-1.4.5.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.simpledialog.min.css" />
         <script type="text/javascript" src="js/libs/jquery.mobile.simpledialog2.min.js"></script>
         
         <script type="text/javascript" src="js/handler.js"></script>
     </head>
     <body>
+        <div data-role="page">
+            
+        <div data-role="header">
+		       <h1>Gesture App</h1>
+	      </div><!-- /header -->
+            
+        <div data-role="content">
         <div class="ui-grid-a center">
-        <div class="ui-block-a"><button id="save" class="ui-btn ui-corner-all" onclick="save()">
-            Save
-        </button></div>
-        <div class="ui-block-b"><button id="compare" class="ui-btn ui-corner-all" onclick="compare()">
-            Compare
-        </button></div>
+        <div class="ui-block-a">
+            <a href="#" id="save" data-role="button" onclick="save()">Save</a>
         </div>
-        <div style="height:150px;">
+        <div class="ui-block-b">
+            <a href="#" id="compare" data-role="button" onclick="compare()">Compare</a>
+        </div>
+        </div>
+        <div style="height:100px;">
             
         </div>
         <div>
@@ -44,13 +49,19 @@
             
         </div>
         <div data-role="controlgroup">
-            <button id="record">
-                Record
-            </button>
-            <span id="welcome"></span>
+            <a href="#" id="record" data-role="button" data-theme="b">Record</a>
         </div>
-        <div style="position:absolute; bottom:0;">
+        <div style="height:40px;">
+            
+        </div>
+        <div data-role="controlgroup">
+            <a href="#" id="logout" data-role="button" onclick="logout()">Log out</a>
             <a href="#" id="opendialog" data-role="button" onclick="deleteDial()">Delete all gestures</a>
+        </div>
+        </div>
+            <div data-position="fixed" data-role="footer">
+               <h4 id="welcome"></h4>
+            </div>
         </div>
     </body>
 </html>

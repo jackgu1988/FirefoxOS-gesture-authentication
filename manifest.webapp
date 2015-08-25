@@ -1,6 +1,7 @@
 {
-  "version": "0.2.0",
+  "version": "1.0",
   "name": "Gesture App",
+  "orientation": [ "portrait-primary" ],
   "description": "Authentication based on gestures",
   "launch_path": "/index.html",
   "icons": {
