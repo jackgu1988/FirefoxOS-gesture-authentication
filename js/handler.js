@@ -14,6 +14,11 @@ const COL_Z = "Z";
 
 var db;
 
+var newGesture = [];
+var loadedGesture = [];
+var gestureChar = [];
+var allGestures = [];
+
 function initializeDB() {
 	if (window.indexedDB) {
 		console.log("IndexedDB support is there");
@@ -42,7 +47,6 @@ function initializeDB() {
 	request.onupgradeneeded = function (e) {
 		// e.target.result holds the connection to database
 		db = e.target.result;
-
 		if (db.objectStoreNames.contains("Reference_Gesture_table")) {
 			db.deleteObjectStore("Reference_Gesture_table");
 		}
@@ -59,17 +63,34 @@ function initializeDB() {
 		var objectStore = db.createObjectStore('Gesture_table', { keyPath: 'id', autoIncrement: true });
 
 		console.log("Object Store has been created");
+	
+		$("#text").text("No gestures recorded yet!");
 	};
 }
 
-var newGesture = [];
-var loadedGesture = [];
-var gestureChar = [];
-var allGestures = [];
+function renew() {
+	
+	db.close();
+	
+	var req = indexedDB.deleteDatabase('gesturesdb');
+	
+	req.onsuccess = function () {
+    console.log("Deleted database successfully");
+		initializeDB(1);
+	};
+	
+	req.onerror = function () {
+    console.log("Couldn't delete database");
+	};
+	
+	req.onblocked = function () {
+    console.log("Couldn't delete database due to the operation being blocked");
+	};
+}
 
 $(document).ready(function() {
 
-	initializeDB();
+	initializeDB(0);
 	
 	var timeout;
 	var count = 0;
@@ -256,6 +277,7 @@ function load() {
 	
 	store2.openCursor().onsuccess = function (e) {
 		var cursor = e.target.result;
+		
 		if (cursor) {
 			var value = cursor.value;
 
@@ -312,4 +334,27 @@ function costT(refG, newG) {
 	* (refG[2] - newG[2]);
 
 	return cost;
+}
+
+function deleteDial() {
+  $('<div>').simpledialog2({
+    mode: 'button',
+    headerText: 'Delete gestures...',
+    headerClose: true,
+    buttonPrompt: 'Are you sure that you want to delete everything?',
+    buttons : {
+      'OK': {
+        click: function () { 
+          renew();
+        }
+      },
+      'Cancel': {
+        click: function () {
+					// nothing
+        },
+        icon: "delete",
+        theme: "c"
+      }
+    }
+  })
 }
