@@ -22,6 +22,8 @@ var gestName = [];
 
 var fail;
 
+var threshold = 50;
+
 function initializeDB() {
 	if (window.indexedDB) {
 		console.log("IndexedDB support is there");
@@ -225,16 +227,16 @@ function compare() {
 		
 		fail = false;
 
-		if (minCost > 50) {
+		if (minCost > threshold) {
 			$("#welcome").text("Authentication failed!");
-			setInterval(function () {if (fail) $("#welcome").text("");}, 3000);
+			setTimeout(function () {if (fail) $("#welcome").text("");}, 3000);
 			fail = true;
 		} else {
 			$("#welcome").text("Welcome " + gestName[id]);
 		}
 		$("#text").text("Score: " + minCost);
 		newGesture = [];
-		setInterval(function () {$("#text").text("Found " + allGestures.length + " recorded gestures.");}, 3000);
+		setTimeout(function () {$("#text").text("Found " + allGestures.length + " recorded gestures.");}, 3000);
 	} else {
 		$("#text").text("A gesture is missing!!!");
 	}
@@ -242,6 +244,22 @@ function compare() {
 
 function logout() {
 	$("#welcome").text("");
+}
+
+function btnThreshold() {
+	$('<div>').simpledialog2({
+ 	  mode: 'blank',
+   	headerText: 'Settings',
+    forceInput:true,
+    headerClose: true,
+		blankContent:"<h4>Set threshold:</h4><input type=\"range\" name=\"slider-1\" id=\"slider-1\" value=\"" + threshold + "\" min=\"10\" max=\"150\" />" +
+     "<a data-role='button' data-icon='refresh' href='#' onclick='$(\"#slider-1\").val(50).slider(\"refresh\");'>Reset</a>" +
+     "<a rel='close' data-icon='check' data-role='button' href='#' onclick='setThreshold($(\"#slider-1\").val())'>Set</a>"
+ 	})
+}
+
+function setThreshold(t_val) {
+	threshold = t_val;
 }
 
 function save() {

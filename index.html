@@ -28,35 +28,39 @@
             
         <div data-role="header">
 		       <h1>Gesture App</h1>
+           <a role="button" data-role="button" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-grid ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" onclick="btnThreshold()"> Navigation </a>
 	      </div><!-- /header -->
             
         <div data-role="content">
         <div class="ui-grid-a center">
         <div class="ui-block-a">
-            <a href="#" id="save" data-role="button" onclick="save()">Save</a>
+            <a href="#" id="save" class="ui-btn ui-btn-a ui-icon-star ui-btn-icon-left ui-shadow ui-corner-all" data-role="button" onclick="save()">Save</a>
         </div>
         <div class="ui-block-b">
-            <a href="#" id="compare" data-role="button" onclick="compare()">Compare</a>
+            <a href="#" id="compare" data-role="button" data-icon="check" onclick="compare()">Compare</a>
         </div>
         </div>
-        <div style="height:100px;">
+        <div style="height:15px;">
             
         </div>
         <div>
-            <span id="text">No gestures recorded yet!</span>
+            <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-role="listview" data-inset="true">
+            <li class="ui-li-divider ui-bar-a ui-first-child" role="heading" data-role="list-divider" data-theme="a" data-swatch="a" data-form="ui-bar-a">Info:</li>
+            <li class="ui-li-static ui-body-a" id="text" data-form="ui-body-a" data-swatch="a" data-theme="a">No gestures recorded yet!</li>
+            </ul>
         </div>
         <div style="height:15px;">
             
         </div>
         <div data-role="controlgroup">
-            <a href="#" id="record" data-role="button" data-theme="b">Record</a>
+            <a href="#" id="record" data-role="button" data-theme="b">Record Gesture</a>
         </div>
         <div style="height:40px;">
             
         </div>
         <div data-role="controlgroup">
-            <a href="#" id="logout" data-role="button" onclick="logout()">Log out</a>
-            <a href="#" id="opendialog" data-role="button" onclick="deleteDial()">Delete all gestures</a>
+            <a href="#" id="logout" data-role="button" data-icon="user" onclick="logout()">Log out</a>
+            <a href="#" id="opendialog" data-role="button" data-icon="delete" onclick="deleteDial()">Delete all gestures</a>
         </div>
         </div>
             <div data-position="fixed" data-role="footer">
