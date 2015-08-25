@@ -18,6 +18,7 @@ var newGesture = [];
 var loadedGesture = [];
 var gestureChar = [];
 var allGestures = [];
+var gestName = [];
 
 function initializeDB() {
 	if (window.indexedDB) {
@@ -127,8 +128,8 @@ $(document).ready(function() {
 	});
 
 	function handleOrientation(event) {
-		var absolute = event.absolute;
-		var alpha    = event.alpha;
+		var alpha = event.absolute;
+		// var alpha    = event.alpha;
 		var beta     = event.beta;
 		var gamma    = event.gamma;
 
@@ -204,6 +205,7 @@ function initialisation(referenceGesture) {
 }
 
 function compare() {
+	$("#welcome").text("");
 	if (newGesture.length > 0 && gestureChar.length > 0) {
 		var cost;
 		var minCost = Number.MAX_SAFE_INTEGER;
@@ -221,8 +223,9 @@ function compare() {
 			$(".ui-page").css("background", "red");
 		} else {
 			$(".ui-page").css("background", "green");
+			$("#welcome").text("Welcome " + gestName[id]);
 		}
-		$("#text").text("The score of " + minCost + " id = " + id);
+		$("#text").text("Score: " + minCost + " / id = " + id);
 	} else {
 		$("#text").text("A gesture is missing!!!");
 	}
@@ -230,45 +233,69 @@ function compare() {
 
 function save() {
 	if (newGesture.length > 0) {
-		var transaction = db.transaction([ 'Gesture_table' ], 'readwrite');
-		var transaction2 = db.transaction([ 'Reference_Gesture_table' ], 'readwrite');
-			
-		var value2 = {};
-		value2.size = newGesture.length;
-
-		var store2 = transaction2.objectStore('Reference_Gesture_table');
-		var request2 = store2.add(value2);
-
-		for (var i = 0; i < newGesture.length; i++) {
-			var value = {};
-			value.x = newGesture[i][0];
-			value.y = newGesture[i][1];
-			value.z = newGesture[i][2];
-
-			var store = transaction.objectStore('Gesture_table');
-			var request = store.add(value);
-
-			request.onsuccess = function (e) {
-					console.log("Your gesture has been saved");
-			};
-
-			request.onerror = function (e) {
-				console.log("Error in saving the gesture. Reason : " + e.value);
-			}
-		}
-
-		$('#text').text("Saved a gesture of " + newGesture.length + " frames.");
-		
-		load();
+		$('<div>').simpledialog2({
+  	  mode: 'button',
+    	headerText: 'Save...',
+	    headerClose: true,
+  	  buttonPrompt: 'Please enter your name:',
+    	buttonInput: true,
+	    buttons : {
+  	    'OK': {
+    	    click: function () {
+						if ($.mobile.sdLastInput != "")
+	      	    save2($.mobile.sdLastInput);
+						else {
+							alert("The name field can't be empty!");
+							save();
+						}
+    	    }
+      	},
+    	}
+  	})
 	} else {
-		$('#text').text("Please record a gesture first.");
+		alert("Please record a gesture first!");
 	}
+}
+
+function save2(name) {
+	var transaction = db.transaction([ 'Gesture_table' ], 'readwrite');
+	var transaction2 = db.transaction([ 'Reference_Gesture_table' ], 'readwrite');
+		
+	var value2 = {};
+	value2.size = newGesture.length;
+	value2.name = name;
+
+	var store2 = transaction2.objectStore('Reference_Gesture_table');
+	var request2 = store2.add(value2);
+
+	for (var i = 0; i < newGesture.length; i++) {
+		var value = {};
+		value.x = newGesture[i][0];
+		value.y = newGesture[i][1];
+		value.z = newGesture[i][2];
+
+		var store = transaction.objectStore('Gesture_table');
+		var request = store.add(value);
+
+		request.onsuccess = function (e) {
+			console.log("Your gesture has been saved");
+		};
+
+		request.onerror = function (e) {
+			console.log("Error in saving the gesture. Reason : " + e.value);
+		}
+	}
+
+	$('#text').text("Saved a gesture of " + newGesture.length + " frames.");
+		
+	load();
 }
 
 function load() {
 	allGestures = [];
 	gestureChar = [];
 	loadedGesture = [];
+	gestName = [];
 
 	//Read the gesture
 
@@ -282,6 +309,7 @@ function load() {
 			var value = cursor.value;
 
 			gestureChar.push(value.size);
+			gestName.push(value.name);
 
 			// move to the next item in the cursor
 			cursor.continue();
@@ -339,13 +367,15 @@ function costT(refG, newG) {
 function deleteDial() {
   $('<div>').simpledialog2({
     mode: 'button',
-    headerText: 'Delete gestures...',
+    headerText: 'Delete...',
     headerClose: true,
-    buttonPrompt: 'Are you sure that you want to delete everything?',
+    buttonPrompt: 'Are you sure that you want to delete all gestures?',
     buttons : {
       'OK': {
         click: function () { 
           renew();
+			$(".ui-page").css("background", "white");
+					$("#welcome").text("");
         }
       },
       'Cancel': {
